@@ -48,115 +48,115 @@ bool CountTest() {
 
 bool DeleteTest1() {
     int number = 10;
-    BinaryNode* head = MakeBinaryNode(number);
+    BinaryNode* head = BinaryNodeMake(number);
     BinaryNodeDelete(&head, number);
     
     bool success = head == NULL && BinaryNodeCount(head) == 0;
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 
 bool DeleteTest2() {
-    BinaryNode* head = MakeBinaryNode(5);
-    Insert(&head, 6);
-    Insert(&head, 4);
-    Insert(&head, 2);
-    Insert(&head, 1);
-    Insert(&head, 3);
+    BinaryNode* head = BinaryNodeMake(5);
+    BinaryNodeInsert(&head, 6);
+    BinaryNodeInsert(&head, 4);
+    BinaryNodeInsert(&head, 2);
+    BinaryNodeInsert(&head, 1);
+    BinaryNodeInsert(&head, 3);
     BinaryNodeDelete(&head, 4);
     
     bool success = BinaryNodeCount(head) == 5 && !BinaryNodeContains(head, 4);
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 
 bool DeleteTest3() {
-    BinaryNode* head = MakeBinaryNode(2);
-    Insert(&head, 1);
-    Insert(&head, 3);
-    Insert(&head, 5);
-    Insert(&head, 4);
-    Insert(&head, 6);
+    BinaryNode* head = BinaryNodeMake(2);
+    BinaryNodeInsert(&head, 1);
+    BinaryNodeInsert(&head, 3);
+    BinaryNodeInsert(&head, 5);
+    BinaryNodeInsert(&head, 4);
+    BinaryNodeInsert(&head, 6);
     BinaryNodeDelete(&head, 3);
     
     bool success = BinaryNodeCount(head) == 5 && !BinaryNodeContains(head, 3);
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 
 bool DeleteTest4() {
-    BinaryNode* head = MakeBinaryNode(4);
-    Insert(&head, 2);
-    Insert(&head, 1);
-    Insert(&head, 3);
-    Insert(&head, 6);
-    Insert(&head, 5);
-    Insert(&head, 7);
+    BinaryNode* head = BinaryNodeMake(4);
+    BinaryNodeInsert(&head, 2);
+    BinaryNodeInsert(&head, 1);
+    BinaryNodeInsert(&head, 3);
+    BinaryNodeInsert(&head, 6);
+    BinaryNodeInsert(&head, 5);
+    BinaryNodeInsert(&head, 7);
     BinaryNodeDelete(&head, 4);
     
     // the smallest value on the right subtree should be promoted
     // the value being promoted should be 5
     bool success = BinaryNodeCount(head) == 6 && !BinaryNodeContains(head, 4) && head->data == 5;
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 
 bool DeleteTest5() {
-    BinaryNode* head = MakeBinaryNode(4);
-    Insert(&head, 2);
-    Insert(&head, 1);
-    Insert(&head, 3);
-    Insert(&head, 100);
-    Insert(&head, 5);
-    Insert(&head, 10);
-    Insert(&head, 7);
-    Insert(&head, 9);
-    Insert(&head, 200);
+    BinaryNode* head = BinaryNodeMake(4);
+    BinaryNodeInsert(&head, 2);
+    BinaryNodeInsert(&head, 1);
+    BinaryNodeInsert(&head, 3);
+    BinaryNodeInsert(&head, 100);
+    BinaryNodeInsert(&head, 5);
+    BinaryNodeInsert(&head, 10);
+    BinaryNodeInsert(&head, 7);
+    BinaryNodeInsert(&head, 9);
+    BinaryNodeInsert(&head, 200);
     BinaryNodeDelete(&head, 4);
     
     // the smallest value on the right subtree should be promoted
     // the value being promoted should be 5
     bool success = BinaryNodeCount(head) == 9 && !BinaryNodeContains(head, 4) && head->data == 5;
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 
 bool DeleteTest6() {
-    BinaryNode* head = MakeBinaryNode(4);
-    Insert(&head, 2);
-    Insert(&head, 1);
-    Insert(&head, 3);
-    Insert(&head, 100);
-    Insert(&head, 5);
-    Insert(&head, 200);
-    Insert(&head, 150);
-    Insert(&head, 110);
-    Insert(&head, 175);
-    Insert(&head, 300);
+    BinaryNode* head = BinaryNodeMake(4);
+    BinaryNodeInsert(&head, 2);
+    BinaryNodeInsert(&head, 1);
+    BinaryNodeInsert(&head, 3);
+    BinaryNodeInsert(&head, 100);
+    BinaryNodeInsert(&head, 5);
+    BinaryNodeInsert(&head, 200);
+    BinaryNodeInsert(&head, 150);
+    BinaryNodeInsert(&head, 110);
+    BinaryNodeInsert(&head, 175);
+    BinaryNodeInsert(&head, 300);
     BinaryNodeDelete(&head, 200);
     
     bool success = BinaryNodeCount(head) == 10 && !BinaryNodeContains(head, 200);
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 
 bool DeleteTest7() {
-    BinaryNode* head = MakeBinaryNode(4);
-    Insert(&head, 2);
-    Insert(&head, 1);
-    Insert(&head, 3);
-    Insert(&head, 100);
-    Insert(&head, 5);
-    Insert(&head, 200);
-    Insert(&head, 300);
-    Insert(&head, 290);
-    Insert(&head, 280);
-    Insert(&head, 270);
-    Insert(&head, 275);
+    BinaryNode* head = BinaryNodeMake(4);
+    BinaryNodeInsert(&head, 2);
+    BinaryNodeInsert(&head, 1);
+    BinaryNodeInsert(&head, 3);
+    BinaryNodeInsert(&head, 100);
+    BinaryNodeInsert(&head, 5);
+    BinaryNodeInsert(&head, 200);
+    BinaryNodeInsert(&head, 300);
+    BinaryNodeInsert(&head, 290);
+    BinaryNodeInsert(&head, 280);
+    BinaryNodeInsert(&head, 270);
+    BinaryNodeInsert(&head, 275);
     BinaryNodeDelete(&head, 200);
     
     bool success = BinaryNodeCount(head) == 11 && !BinaryNodeContains(head, 200);
-    FreeBinaryNode(head);
+    BinaryNodeFree(head);
     return success;
 }
 

@@ -17,16 +17,16 @@ typedef struct BinaryNode {
     struct BinaryNode* right;
 } BinaryNode;
 
-BinaryNode* MakeBinaryNode(int data);
-void FreeBinaryNode(BinaryNode* head);
-void Insert(BinaryNode** head, int data);
+BinaryNode* BinaryNodeMake(int data);
+void BinaryNodeFree(BinaryNode* head);
+void BinaryNodeInsert(BinaryNode** head, int data);
 void BinaryNodeDelete(BinaryNode** head, int data);
 bool BinaryNodeContains(BinaryNode* head, int data);
 int BinaryNodeCount(BinaryNode* head);
-void Balance(BinaryNode* head);
-int Depth(BinaryNode* head);
-void PrintInOrder(BinaryNode* head);
-void PrintPreOrder(BinaryNode* head);
-void PrintPostOrder(BinaryNode* head);
+void BinaryNodeBalance(BinaryNode* head);
+int BinaryNodeDepth(BinaryNode* head);
+void BinaryNodePrintInOrder(BinaryNode* head);
+void BinaryNodePrintPreOrder(BinaryNode* head);
+void BinaryNodePrintPostOrder(BinaryNode* head);
 
 #endif /* BinaryNode_h */

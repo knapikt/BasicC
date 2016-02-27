@@ -12,7 +12,7 @@
 
 void BinaryNodeCountRecursive(BinaryNode* head, int* count);
 
-BinaryNode* MakeBinaryNode(int data) {
+BinaryNode* BinaryNodeMake(int data) {
     BinaryNode* node = malloc(sizeof(*node));
     node->data = data;
     node->left = NULL;
@@ -20,21 +20,21 @@ BinaryNode* MakeBinaryNode(int data) {
     return node;
 }
 
-void FreeBinaryNode(BinaryNode* head) {
+void BinaryNodeFree(BinaryNode* head) {
     if (head == NULL) {
         return;
     }
     
-    FreeBinaryNode(head->left);
-    FreeBinaryNode(head->right);
+    BinaryNodeFree(head->left);
+    BinaryNodeFree(head->right);
     head->left = NULL;
     head->right = NULL;
     free(head);
 }
 
-void Insert(BinaryNode** head, int data) {
+void BinaryNodeInsert(BinaryNode** head, int data) {
     if (*head == NULL) {
-        *head = MakeBinaryNode(data);
+        *head = BinaryNodeMake(data);
         return;
     }
     
@@ -47,13 +47,13 @@ void Insert(BinaryNode** head, int data) {
         
         if (data < search->data) {
             if (search->left == NULL) {
-                search->left = MakeBinaryNode(data);
+                search->left = BinaryNodeMake(data);
                 return;
             }
             search = search->left;
         } else {
             if (search->right == NULL) {
-                search->right = MakeBinaryNode(data);
+                search->right = BinaryNodeMake(data);
                 return;
             }
             search = search->right;
@@ -104,7 +104,7 @@ void BinaryNodeDelete(BinaryNode** head, int data) {
         }
         
         deleting->right = NULL;
-        FreeBinaryNode(deleting);
+        BinaryNodeFree(deleting);
         return;
     }
     
@@ -123,7 +123,7 @@ void BinaryNodeDelete(BinaryNode** head, int data) {
         }
         
         deleting->left = NULL;
-        FreeBinaryNode(deleting);
+        BinaryNodeFree(deleting);
         return;
     }
     
@@ -141,7 +141,7 @@ void BinaryNodeDelete(BinaryNode** head, int data) {
             }
         }
         
-        FreeBinaryNode(deleting);
+        BinaryNodeFree(deleting);
         return;
     }
     
@@ -162,7 +162,7 @@ void BinaryNodeDelete(BinaryNode** head, int data) {
     }
     
     leftMost->right = NULL;
-    FreeBinaryNode(leftMost);
+    BinaryNodeFree(leftMost);
 }
 
 bool BinaryNodeContains(BinaryNode* head, int data) {
@@ -200,33 +200,33 @@ void BinaryNodeCountRecursive(BinaryNode* head, int* count) {
     BinaryNodeCountRecursive(head->right, count);
 }
 
-void PrintInOrder(BinaryNode* head) {
+void BinaryNodePrintInOrder(BinaryNode* head) {
     if (head == NULL) {
         return;
     }
     
-    PrintInOrder(head->left);
+    BinaryNodePrintInOrder(head->left);
     printf("In Order: %d\n", head->data);
-    PrintInOrder(head->right);
+    BinaryNodePrintInOrder(head->right);
 }
 
-void PrintPreOrder(BinaryNode* head) {
+void BinaryNodePrintPreOrder(BinaryNode* head) {
     if (head == NULL) {
         return;
     }
     
     printf("Pre Order: %d\n", head->data);
-    PrintPreOrder(head->left);
-    PrintPreOrder(head->right);
+    BinaryNodePrintPreOrder(head->left);
+    BinaryNodePrintPreOrder(head->right);
 }
 
-void PrintPostOrder(BinaryNode* head) {
+void BinaryNodePrintPostOrder(BinaryNode* head) {
     if (head == NULL) {
         return;
     }
     
-    PrintPostOrder(head->left);
-    PrintPostOrder(head->right);
+    BinaryNodePrintPostOrder(head->left);
+    BinaryNodePrintPostOrder(head->right);
     printf("Post Order: %d\n", head->data);
 }
 
