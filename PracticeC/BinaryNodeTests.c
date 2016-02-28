@@ -9,8 +9,10 @@
 #include "BinaryNodeTests.h"
 #include "BinaryNode.h"
 
+#include <stdlib.h>
+
 void TestFunction(char* testName, bool (*f)());
-bool CountTest();
+bool ZeroCountTest();
 bool DeleteTest1();
 bool DeleteTest2();
 bool DeleteTest3();
@@ -18,9 +20,10 @@ bool DeleteTest4();
 bool DeleteTest5();
 bool DeleteTest6();
 bool DeleteTest7();
+bool InsertDeleteTest1();
 
 void RunBinaryNodeTests() {
-    TestFunction("Count test", CountTest);
+    TestFunction("Zero Count test", ZeroCountTest);
     TestFunction("Delete single node", DeleteTest1);
     TestFunction("Delete inner node with no right child", DeleteTest2);
     TestFunction("Delete inner node with no left child", DeleteTest3);
@@ -28,6 +31,7 @@ void RunBinaryNodeTests() {
     TestFunction("Delete root that has left and right children #2", DeleteTest5);
     TestFunction("Delete inner node that has left and right children #1", DeleteTest6);
     TestFunction("Delete inner node that has left and right children #2", DeleteTest7);
+    TestFunction("Mass inserts and deletes", InsertDeleteTest1);
     printf("\n");
 }
 
@@ -39,7 +43,7 @@ void TestFunction(char* testName, bool (*f)()) {
     }
 }
 
-bool CountTest() {
+bool ZeroCountTest() {
     BinaryNode* head = NULL;
     if (BinaryNodeCount(head) != 0) {
         return false;
@@ -97,7 +101,7 @@ bool DeleteTest4() {
     
     // the smallest value on the right subtree should be promoted
     // the value being promoted should be 5
-    bool success = BinaryNodeCount(head) == 6 && !BinaryNodeContains(head, 4) && head->data == 5;
+    bool success = BinaryNodeCount(head) == 6 && !BinaryNodeContains(head, 4) && BinaryNodeData(head) == 5;
     BinaryNodeFree(head);
     return success;
 }
@@ -117,7 +121,7 @@ bool DeleteTest5() {
     
     // the smallest value on the right subtree should be promoted
     // the value being promoted should be 5
-    bool success = BinaryNodeCount(head) == 9 && !BinaryNodeContains(head, 4) && head->data == 5;
+    bool success = BinaryNodeCount(head) == 9 && !BinaryNodeContains(head, 4) && BinaryNodeData(head) == 5;
     BinaryNodeFree(head);
     return success;
 }
@@ -161,3 +165,38 @@ bool DeleteTest7() {
     return success;
 }
 
+// seed the tree with a bunch of inserts
+// insert value, check value is contained
+// delete value, check value is not contained
+// repeat X times
+bool InsertDeleteTest1() {
+    int initialInserts = 10000;
+    int insertAndDeletes = 10000;
+    int maxNumber = 100000;
+    bool success = true;
+    BinaryNode* head = NULL;
+    
+    for (int i = 0; i < initialInserts; i++) {
+        int randomValue = rand() % maxNumber;
+        BinaryNodeInsert(&head, randomValue);
+    }
+    
+    for (int i = 0; i < insertAndDeletes; i++) {
+        int randomValue = rand() % maxNumber;
+        BinaryNodeInsert(&head, randomValue);
+        
+        if (!BinaryNodeContains(head, randomValue)) {
+            success = false;
+            break;
+        }
+        
+        BinaryNodeDelete(&head, randomValue);
+        
+        if (BinaryNodeContains(head, randomValue)) {
+            success = false;
+            break;
+        }
+    }
+    BinaryNodeFree(head);
+    return success;
+}

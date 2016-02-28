@@ -20,14 +20,15 @@ void PrintElapsedTime(clock_t start, clock_t end, char* messsage);
 void RunBinaryNodePerformanceTests() {
     ContainsTest(10, 100000);
     ContainsTest(100, 10000);
-    ContainsTest(1000, 10000);
-    ContainsTest(10000, 1000);
-    ContainsTest(20000, 5000);
+    ContainsTest(1000, 1000);
+    ContainsTest(10000, 100);
+    ContainsTest(100000, 10);
+    ContainsTest(1000000, 1);
     getchar();
 }
 
 void ContainsTest(int numberNodes, int numberRepeatContains) {
-    printf("Number of nodes: %d, Number of inserts: %d\n", numberNodes, numberNodes * numberRepeatContains);
+    printf("Tree size: %d, Number of inserts: %d\n", numberNodes, numberNodes * numberRepeatContains);
     
     int* numbers = malloc(sizeof(int) * numberNodes);
     for (int i = 0; i < numberNodes; i++) {
@@ -50,11 +51,15 @@ void ContainsTest(int numberNodes, int numberRepeatContains) {
     for (int i = 1; i < numberNodes; i++) {
         BinaryNodeInsert(&balancedNode, numbers[i]);
         BinaryNodeInsert(&randomNode, numbers[i]);
-        BinaryNodeInsert(&linearNode, i);
+        
+        // linear is too slow, don't attempt for large trees
+        if (numberNodes <= maxLinearNodes) {
+            BinaryNodeInsert(&linearNode, i);
+        }
     }
     
     clock_t end = clock();
-    PrintElapsedTime(start, end, "Allocation");
+    PrintElapsedTime(start, end, "Insert/Allocate");
     
     if (numberNodes <= maxLinearNodes) {
         TimeContains(linearNode, numberNodes, numberRepeatContains, false,  "Contains   (Linear)");
@@ -72,8 +77,11 @@ void ContainsTest(int numberNodes, int numberRepeatContains) {
 
 void TimeContains(BinaryNode* head, int numberNodes, int numberRepeatContains, bool preBalance, char* message) {
     clock_t start = clock();
+
     if (preBalance) {
         BinaryNodeBalance(&head);
+        clock_t balance_end = clock();
+        PrintElapsedTime(start, balance_end, "Balancing          ");
     }
     
     for (int i = 0; i < numberNodes; i++) {

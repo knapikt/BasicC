@@ -6,8 +6,6 @@
 //  Copyright © 2016 Tim. All rights reserved.
 //
 
-#include <stdio.h>
-#include "BinaryNode.h"
 #include "BinaryNodeTests.h"
 #include "BinaryNodePerformanceTests.h"
 
