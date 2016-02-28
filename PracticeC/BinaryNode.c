@@ -12,15 +12,15 @@
 
 void BinaryNodeCountRecursive(BinaryNode* head, int* count);
 
-void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
+void BalanceBinaryNodeFromSortedNodes(BinaryNode** sortedNodes,
                                       BinaryNode** headReference,
                                       BinaryNode* parent,
                                       bool connectLeft,
                                       int leftIndex,
                                       int rightIndex);
 
-void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, int count);
-void AddToSortedNodes(BinaryNode* head, BinaryNode* nodes, int count, int* index);
+void PopulateSortedNodes(BinaryNode* head, BinaryNode** nodes, int count);
+void AddToSortedNodes(BinaryNode* head, BinaryNode** nodes, int count, int* index);
 
 BinaryNode* BinaryNodeMake(int data) {
     BinaryNode* node = malloc(sizeof(*node));
@@ -39,7 +39,7 @@ void BinaryNodeFree(BinaryNode* head) {
     if (head == NULL) {
         return;
     }
-    
+   
     BinaryNodeFree(head->left);
     BinaryNodeFree(head->right);
     head->left = NULL;
@@ -53,7 +53,7 @@ void BinaryNodeInsert(BinaryNode** head, int data) {
         return;
     }
     
-    BinaryNode *search = *head;
+    BinaryNode* search = *head;
     
     while (true) {
         if (search->data == data) {
@@ -73,7 +73,6 @@ void BinaryNodeInsert(BinaryNode** head, int data) {
             }
             search = search->right;
         }
-        
     }
 }
 
@@ -216,19 +215,19 @@ void BinaryNodeCountRecursive(BinaryNode* head, int* count) {
     BinaryNodeCountRecursive(head->right, count);
 }
 
-void BinaryNodeBalance(BinaryNode** head) {
-    int count = BinaryNodeCount(*head);
+void BinaryNodeBalance(BinaryNode** headReference) {
+    int count = BinaryNodeCount(*headReference);
     if (count <= 2) { // no optimizations possible with less than 2 nodes
         return;
     }
     
-    BinaryNode* sortedNodes = malloc(sizeof(BinaryNode) * count);
-    PopulateSortedNodes(*head, sortedNodes, count);
-    BalanceBinaryNodeFromSortedNodes(sortedNodes, head, NULL, true, 0, count - 1);
+    BinaryNode** sortedNodes = malloc(sizeof(BinaryNode*) * count);
+    PopulateSortedNodes(*headReference, sortedNodes, count);
+    BalanceBinaryNodeFromSortedNodes(sortedNodes, headReference, NULL, true, 0, count - 1);
     free(sortedNodes);
 }
 
-void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
+void BalanceBinaryNodeFromSortedNodes(BinaryNode** sortedNodes,
                                       BinaryNode** headReference,
                                       BinaryNode* parent,
                                       bool connectLeft,
@@ -239,7 +238,7 @@ void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
     }
     
     int middleIndex = (leftIndex + rightIndex) / 2;
-    BinaryNode* middleNode = &sortedNodes[middleIndex];
+    BinaryNode* middleNode = sortedNodes[middleIndex];
     middleNode->left = NULL;
     middleNode->right = NULL;
     
@@ -258,18 +257,18 @@ void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
     BalanceBinaryNodeFromSortedNodes(sortedNodes, headReference, middleNode, false, middleIndex + 1, rightIndex);
 }
 
-void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, int count) {
+void PopulateSortedNodes(BinaryNode* head, BinaryNode** nodes, int count) {
     int index = 0;
     AddToSortedNodes(head, nodes, count, &index);
 }
 
-void AddToSortedNodes(BinaryNode* head, BinaryNode* nodes, int count, int* index) {
+void AddToSortedNodes(BinaryNode* head, BinaryNode** nodes, int count, int* index) {
     if (head == NULL) {
         return;
     }
 
     AddToSortedNodes(head->left, nodes, count, index);
-    nodes[*index] = *head;
+    nodes[*index] = head;
     (*index)++;
     AddToSortedNodes(head->right, nodes, count, index);
 }

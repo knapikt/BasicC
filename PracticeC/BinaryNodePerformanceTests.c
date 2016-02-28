@@ -11,15 +11,18 @@
 #include "BinaryNodePerformanceTests.h"
 #include "BinaryNode.h"
 
+const int maxLinearNodes = 1000;
+
 void ContainsTest(int numberNodes, int numberRepeatContains);
 void TimeContains(BinaryNode* head, int numberNodes, int numberRepeatContains, bool preBalance, char* message);
 void PrintElapsedTime(clock_t start, clock_t end, char* messsage);
 
 void RunBinaryNodePerformanceTests() {
-    ContainsTest(10, 10000);
-    ContainsTest(100, 1000);
-    ContainsTest(1000, 100);
-    ContainsTest(10000, 10);
+    ContainsTest(10, 100000);
+    ContainsTest(100, 10000);
+    ContainsTest(1000, 10000);
+    ContainsTest(10000, 1000);
+    ContainsTest(20000, 5000);
     getchar();
 }
 
@@ -27,7 +30,6 @@ void ContainsTest(int numberNodes, int numberRepeatContains) {
     printf("Number of nodes: %d, Number of inserts: %d\n", numberNodes, numberNodes * numberRepeatContains);
     
     int* numbers = malloc(sizeof(int) * numberNodes);
-    
     for (int i = 0; i < numberNodes; i++) {
         numbers[i] = i;
     }
@@ -54,7 +56,10 @@ void ContainsTest(int numberNodes, int numberRepeatContains) {
     clock_t end = clock();
     PrintElapsedTime(start, end, "Allocation");
     
-    TimeContains(linearNode, numberNodes, numberRepeatContains, false,  "Contains   (Linear)");
+    if (numberNodes <= maxLinearNodes) {
+        TimeContains(linearNode, numberNodes, numberRepeatContains, false,  "Contains   (Linear)");
+    }
+    
     TimeContains(randomNode, numberNodes, numberRepeatContains, false,  "Contains   (Random)");
     TimeContains(balancedNode, numberNodes, numberRepeatContains, true, "Contains (Balanced)");
     printf("\n");
