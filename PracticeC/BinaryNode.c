@@ -11,6 +11,9 @@
 #include <stdlib.h>
 
 void BinaryNodeCountRecursive(BinaryNode* head, int* count);
+void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes, BinaryNode** headReference, BinaryNode* parent, bool connectLeft, int leftIndex, int rightIndex);
+void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, int count);
+void AddToSortedNodes(BinaryNode* head, BinaryNode* nodes, int count, int* index);
 
 BinaryNode* BinaryNodeMake(int data) {
     BinaryNode* node = malloc(sizeof(*node));
@@ -195,9 +198,68 @@ void BinaryNodeCountRecursive(BinaryNode* head, int* count) {
     if (head == NULL) {
         return;
     }
+    
     (*count)++;
     BinaryNodeCountRecursive(head->left, count);
     BinaryNodeCountRecursive(head->right, count);
+}
+
+void BinaryNodeBalance(BinaryNode** head) {
+    int count = BinaryNodeCount(*head);
+    if (count <= 2) { // no optimizations possible with less than 2 nodes
+        return;
+    }
+    
+    BinaryNode* sortedNodes = malloc(sizeof(BinaryNode) * count);
+    PopulateSortedNodes(*head, sortedNodes, count);
+    BalanceBinaryNodeFromSortedNodes(sortedNodes, head, NULL, true, 0, count - 1);
+    //free(sortedNodes);
+}
+
+void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
+                                      BinaryNode** headReference,
+                                      BinaryNode* parent,
+                                      bool connectLeft,
+                                      int leftIndex,
+                                      int rightIndex) {
+    if (leftIndex > rightIndex) {
+        return;
+    }
+    
+    int middleIndex = (leftIndex + rightIndex) / 2;
+    BinaryNode* middleNode = &sortedNodes[middleIndex];
+    middleNode->left = NULL;
+    middleNode->right = NULL;
+    
+    if (parent == NULL) {
+        *headReference = middleNode; // reassign the head node
+    } else {
+        if (connectLeft) {
+            parent->left = middleNode;
+        } else {
+            parent->right = middleNode;
+        }
+    }
+    
+    // rebalance left and right side of middleNode
+    BalanceBinaryNodeFromSortedNodes(sortedNodes, headReference, middleNode, true, leftIndex, middleIndex - 1);
+    BalanceBinaryNodeFromSortedNodes(sortedNodes, headReference, middleNode, false, middleIndex + 1, rightIndex);
+}
+
+void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, count) {
+    int index = 0;
+    AddToSortedNodes(head, nodes, count, &index);
+}
+
+void AddToSortedNodes(BinaryNode* head, BinaryNode* nodes, int count, int* index) {
+    if (head == NULL) {
+        return;
+    }
+
+    AddToSortedNodes(head->left, nodes, count, index);
+    nodes[*index] = *head;
+    (*index)++;
+    AddToSortedNodes(head->right, nodes, count, index);
 }
 
 void BinaryNodePrintInOrder(BinaryNode* head) {
@@ -229,5 +291,3 @@ void BinaryNodePrintPostOrder(BinaryNode* head) {
     BinaryNodePrintPostOrder(head->right);
     printf("Post Order: %d\n", head->data);
 }
-
-

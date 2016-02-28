@@ -11,6 +11,7 @@
 		7C5A3ED71C824C0F0024F7DE /* BinaryNode.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C5A3ECF1C824C0F0024F7DE /* BinaryNode.c */; };
 		7C5A3ED81C824C0F0024F7DE /* BinaryNodeTests.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C5A3ED11C824C0F0024F7DE /* BinaryNodeTests.c */; };
 		7C5A3ED91C824C0F0024F7DE /* LinkedNode.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C5A3ED31C824C0F0024F7DE /* LinkedNode.c */; };
+		7C5A3EDD1C82566C0024F7DE /* BinaryNodePerformanceTests.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C5A3EDB1C82566C0024F7DE /* BinaryNodePerformanceTests.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		7C5A3ED21C824C0F0024F7DE /* BinaryNodeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryNodeTests.h; sourceTree = "<group>"; };
 		7C5A3ED31C824C0F0024F7DE /* LinkedNode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LinkedNode.c; sourceTree = "<group>"; };
 		7C5A3ED41C824C0F0024F7DE /* LinkedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedNode.h; sourceTree = "<group>"; };
+		7C5A3EDB1C82566C0024F7DE /* BinaryNodePerformanceTests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BinaryNodePerformanceTests.c; sourceTree = "<group>"; };
+		7C5A3EDC1C82566C0024F7DE /* BinaryNodePerformanceTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryNodePerformanceTests.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,8 @@
 				7C5A3ED31C824C0F0024F7DE /* LinkedNode.c */,
 				7C5A3ED41C824C0F0024F7DE /* LinkedNode.h */,
 				7C5A3EC81C824BDE0024F7DE /* main.c */,
+				7C5A3EDB1C82566C0024F7DE /* BinaryNodePerformanceTests.c */,
+				7C5A3EDC1C82566C0024F7DE /* BinaryNodePerformanceTests.h */,
 			);
 			path = PracticeC;
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C5A3EDD1C82566C0024F7DE /* BinaryNodePerformanceTests.c in Sources */,
 				7C5A3ED71C824C0F0024F7DE /* BinaryNode.c in Sources */,
 				7C5A3EC91C824BDE0024F7DE /* main.c in Sources */,
 				7C5A3ED91C824C0F0024F7DE /* LinkedNode.c in Sources */,

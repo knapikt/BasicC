@@ -23,7 +23,7 @@ void BinaryNodeInsert(BinaryNode** head, int data);
 void BinaryNodeDelete(BinaryNode** head, int data);
 bool BinaryNodeContains(BinaryNode* head, int data);
 int BinaryNodeCount(BinaryNode* head);
-void BinaryNodeBalance(BinaryNode* head);
+void BinaryNodeBalance(BinaryNode** head);
 int BinaryNodeDepth(BinaryNode* head);
 void BinaryNodePrintInOrder(BinaryNode* head);
 void BinaryNodePrintPreOrder(BinaryNode* head);

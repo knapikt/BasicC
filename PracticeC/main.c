@@ -9,8 +9,10 @@
 #include <stdio.h>
 #include "BinaryNode.h"
 #include "BinaryNodeTests.h"
+#include "BinaryNodePerformanceTests.h"
 
 int main(int argc, const char * argv[]) {
-    RunBinaryNodeTests();
+    //RunBinaryNodeTests();
+    RunBinaryNodePerformanceTests();
     return 0;
 }
