@@ -11,15 +11,21 @@
 #include "BinaryNodePerformanceTests.h"
 #include "BinaryNode.h"
 
-void ContainsTest(int numberNodes);
-void TimeContains(BinaryNode* head, int numberNodes, bool preBalance, char* message);
+void ContainsTest(int numberNodes, int numberRepeatContains);
+void TimeContains(BinaryNode* head, int numberNodes, int numberRepeatContains, bool preBalance, char* message);
 void PrintElapsedTime(clock_t start, clock_t end, char* messsage);
 
 void RunBinaryNodePerformanceTests() {
-    ContainsTest(10000);
+    ContainsTest(10, 10000);
+    ContainsTest(100, 1000);
+    ContainsTest(1000, 100);
+    ContainsTest(10000, 10);
+    getchar();
 }
 
-void ContainsTest(int numberNodes) {
+void ContainsTest(int numberNodes, int numberRepeatContains) {
+    printf("Number of nodes: %d, Number of inserts: %d\n", numberNodes, numberNodes * numberRepeatContains);
+    
     int* numbers = malloc(sizeof(int) * numberNodes);
     
     for (int i = 0; i < numberNodes; i++) {
@@ -48,26 +54,29 @@ void ContainsTest(int numberNodes) {
     clock_t end = clock();
     PrintElapsedTime(start, end, "Allocation");
     
-    TimeContains(linearNode, numberNodes, false,  "Contains   (Linear)");
-    TimeContains(randomNode, numberNodes, false,  "Contains   (Random)");
-    TimeContains(balancedNode, numberNodes, true, "Contains (Balanced)");
+    TimeContains(linearNode, numberNodes, numberRepeatContains, false,  "Contains   (Linear)");
+    TimeContains(randomNode, numberNodes, numberRepeatContains, false,  "Contains   (Random)");
+    TimeContains(balancedNode, numberNodes, numberRepeatContains, true, "Contains (Balanced)");
+    printf("\n");
     
     BinaryNodeFree(linearNode);
     BinaryNodeFree(randomNode);
-    //BinaryNodeFree(balancedNode);
+    BinaryNodeFree(balancedNode);
     free(numbers);
 }
 
-void TimeContains(BinaryNode* head, int numberNodes, bool preBalance, char* message) {
+void TimeContains(BinaryNode* head, int numberNodes, int numberRepeatContains, bool preBalance, char* message) {
     clock_t start = clock();
     if (preBalance) {
         BinaryNodeBalance(&head);
     }
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < numberNodes; i++) {
+    
+    for (int i = 0; i < numberNodes; i++) {
+        for (int j = 0; j < numberRepeatContains; j++) {
             BinaryNodeContains(head, i);
         }
     }
+    
     clock_t end = clock();
     PrintElapsedTime(start, end, message);
 }

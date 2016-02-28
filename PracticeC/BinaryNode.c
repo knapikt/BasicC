@@ -11,12 +11,24 @@
 #include <stdlib.h>
 
 void BinaryNodeCountRecursive(BinaryNode* head, int* count);
-void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes, BinaryNode** headReference, BinaryNode* parent, bool connectLeft, int leftIndex, int rightIndex);
+
+void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
+                                      BinaryNode** headReference,
+                                      BinaryNode* parent,
+                                      bool connectLeft,
+                                      int leftIndex,
+                                      int rightIndex);
+
 void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, int count);
 void AddToSortedNodes(BinaryNode* head, BinaryNode* nodes, int count, int* index);
 
 BinaryNode* BinaryNodeMake(int data) {
     BinaryNode* node = malloc(sizeof(*node));
+    if (node == NULL) {
+        fprintf(stderr, "Out of memory allocating for BinaryNode");
+        exit(EXIT_FAILURE);
+    }
+    
     node->data = data;
     node->left = NULL;
     node->right = NULL;
@@ -213,7 +225,7 @@ void BinaryNodeBalance(BinaryNode** head) {
     BinaryNode* sortedNodes = malloc(sizeof(BinaryNode) * count);
     PopulateSortedNodes(*head, sortedNodes, count);
     BalanceBinaryNodeFromSortedNodes(sortedNodes, head, NULL, true, 0, count - 1);
-    //free(sortedNodes);
+    free(sortedNodes);
 }
 
 void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
@@ -246,7 +258,7 @@ void BalanceBinaryNodeFromSortedNodes(BinaryNode* sortedNodes,
     BalanceBinaryNodeFromSortedNodes(sortedNodes, headReference, middleNode, false, middleIndex + 1, rightIndex);
 }
 
-void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, count) {
+void PopulateSortedNodes(BinaryNode* head, BinaryNode* nodes, int count) {
     int index = 0;
     AddToSortedNodes(head, nodes, count, &index);
 }

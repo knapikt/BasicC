@@ -28,6 +28,7 @@ void RunBinaryNodeTests() {
     TestFunction("Delete root that has left and right children #2", DeleteTest5);
     TestFunction("Delete inner node that has left and right children #1", DeleteTest6);
     TestFunction("Delete inner node that has left and right children #2", DeleteTest7);
+    printf("\n");
 }
 
 void TestFunction(char* testName, bool (*f)()) {
